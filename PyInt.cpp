@@ -1,19 +1,19 @@
-/* 
+/*
  * File:   PyInt.cpp
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 12, 2013, 10:13 PM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * See the associated header file for a description of the purpose of this 
- * class. Implementation details are provided here. Read below for 
- * any specific details. 
- * 
+ * See the associated header file for a description of the purpose of this
+ * class. Implementation details are provided here. Read below for
+ * any specific details.
+ *
  */
 
 #include "PyInt.h"
@@ -68,9 +68,9 @@ PyObject* PyInt::__add__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -89,12 +89,12 @@ PyObject* PyInt::__sub__(vector<PyObject*>* args) {
     PyInt* x;
     PyFloat* y;
     ostringstream msg;
-    
+
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -116,9 +116,9 @@ PyObject* PyInt::__mul__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -142,9 +142,9 @@ PyObject* PyInt::__truediv__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -172,9 +172,9 @@ PyObject* PyInt::__floordiv__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     PyObject* arg = (*args)[0];
 
     switch (arg->getType()->typeId()) {
@@ -201,10 +201,10 @@ PyObject* PyInt::__eq__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
-    //We should check the type of args[0] before casting it. 
+
+    //We should check the type of args[0] before casting it.
     PyInt* other = (PyInt*) (*args)[0];
 
     return new PyBool(val == other->val);
@@ -215,10 +215,10 @@ PyObject* PyInt::__lt__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
 
-    //We should check the type of args[0] before casting it. 
+    //We should check the type of args[0] before casting it.
     PyInt* other = (PyInt*) (*args)[0];
 
     return new PyBool(val < other->val);
@@ -230,10 +230,10 @@ PyObject* PyInt::__gt__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
 
-    //We should check the type of args[0] before casting it. 
+    //We should check the type of args[0] before casting it.
     PyInt* other = (PyInt*) (*args)[0];
 
     return new PyBool(val > other->val);
@@ -245,10 +245,10 @@ PyObject* PyInt::__le__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
 
-    //We should check the type of args[0] before casting it. 
+    //We should check the type of args[0] before casting it.
     PyInt* other = (PyInt*) (*args)[0];
 
     return new PyBool(val <= other->val);
@@ -260,10 +260,10 @@ PyObject* PyInt::__ge__(vector<PyObject*>* args) {
 
     if (args->size() != 1) {
         msg << "TypeError: expected 1 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
 
-    //We should check the type of args[0] before casting it. 
+    //We should check the type of args[0] before casting it.
     PyInt* other = (PyInt*) (*args)[0];
 
     return new PyBool(val >= other->val);
@@ -278,9 +278,9 @@ PyObject* PyInt::__float__(vector<PyObject*>* args) {
 
     if (args->size() != 0) {
         msg << "TypeError: expected 0 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     return new PyFloat(this->getVal());
 }
 
@@ -289,9 +289,9 @@ PyObject* PyInt::__int__(vector<PyObject*>* args) {
 
     if (args->size() != 0) {
         msg << "TypeError: expected 0 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     return this;
 }
 
@@ -300,9 +300,9 @@ PyObject* PyInt::__bool__(vector<PyObject*>* args) {
 
     if (args->size() != 0) {
         msg << "TypeError: expected 0 arguments, got " << args->size();
-        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());  
+        throw new PyException(PYWRONGARGCOUNTEXCEPTION,msg.str());
     }
-    
+
     if (this->getVal() == 0)
         return new PyBool(false);
 

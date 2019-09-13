@@ -1,23 +1,23 @@
-/* 
+/*
  * File:   PyList.h
  * Author: Kent D. Lee
  * (c)
  * Created on February 27, 2013, 9:12 PM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * PyFunList objects are lists where the head and the tail are joined 
+ * PyFunList objects are lists where the head and the tail are joined
  * together to form a list in the same manner that most functional languages
  * implement lists. This formulation of a list enables O(1) head and tail
- * (i.e. car and cdr if you are a Lisp programmer) operations. 
+ * (i.e. car and cdr if you are a Lisp programmer) operations.
  */
 
 #ifndef PYFUNLIST_H
-#define	PYFUNLIST_H
+#define PYFUNLIST_H
 
 #include "PyObject.h"
 #include "PyType.h"
@@ -38,10 +38,10 @@ public:
     PyObject* getHead();
     PyFunList* getTail();
     PyFunListElm* getElm(); /* Used ONLY by PyFunListIterator (should be friend) */
-    
 
-    
-    
+
+
+
 protected:
     PyFunListElm* data;
     virtual PyObject* __getitem__(vector<PyObject*>* args);
@@ -61,12 +61,12 @@ public:
     PyObject* getHead();
     PyFunListElm* getTail();
     int getLen();
-    
+
 private:
     PyObject* head;
     PyFunListElm* tail;
     int len;
 };
 
-#endif	/* PYFUNLIST_H */
+#endif  /* PYFUNLIST_H */
 

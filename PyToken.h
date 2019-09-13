@@ -3,15 +3,15 @@
  * Author: Kent D. Lee
  * (c) 2013
  * Created on: Feb 7, 2013
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * This class defines tokens that are returned by the PyScanner to the 
- * PyParser when CoCo reads and parses an assembly language (casm) file. 
+ * This class defines tokens that are returned by the PyScanner to the
+ * PyParser when CoCo reads and parses an assembly language (casm) file.
  */
 
 #ifndef PYTOKEN_H_
@@ -23,18 +23,18 @@ using namespace std;
 
 class PyToken {
 public:
-	PyToken(int tokenType, string lex, int line, int col);
-	virtual ~PyToken();
-	string getLex() const;
-	int getType() const;
-	int getCol() const;
-	int getLine() const;
+        PyToken(int tokenType, string lex, int line, int col);
+        virtual ~PyToken();
+        string getLex() const;
+        int getType() const;
+        int getCol() const;
+        int getLine() const;
 
 private:
-	string lexeme;
-	int tokenType;
-	int line;
-	int column;
+        string lexeme;
+        int tokenType;
+        int line;
+        int column;
 };
 
 const int PYIDENTIFIERTOKEN = 1;

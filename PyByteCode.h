@@ -1,32 +1,32 @@
-/* 
+/*
  * File:   PyByteCode.h
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 11, 2013, 11:26 AM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
- * Description: 
- * The PyByteCode class is used for byte codes of compiled functions in the 
- * virtual machine. Each byte code read from the source file is parsed along 
+ *
+ * Description:
+ * The PyByteCode class is used for byte codes of compiled functions in the
+ * virtual machine. Each byte code read from the source file is parsed along
  * with its operand and a corresponding object is created to hold the
  * byte codes information. While parsing the assembly language file, branch
  * and jump instructions will likely have a label as their target. This label
- * is stored here in the bytecode object. A second pass, once all instructions 
- * are read and parsed from the input file, sets the necessary operand for the 
- * target of the label. 
- * 
- * IMPORTANT NOTE: 
+ * is stored here in the bytecode object. A second pass, once all instructions
+ * are read and parsed from the input file, sets the necessary operand for the
+ * target of the label.
+ *
+ * IMPORTANT NOTE:
  * In the original Python Virtual Machine the operand (i.e. target) of a branch
- * or jump instruction was either relative to the current Program Counter (PC) 
- * absolute. In CoCo all operands are absolute regardless of instruction type. 
+ * or jump instruction was either relative to the current Program Counter (PC)
+ * absolute. In CoCo all operands are absolute regardless of instruction type.
  */
 
 #ifndef PYBYTECODE_H
-#define	PYBYTECODE_H
+#define PYBYTECODE_H
 
 #include<string>
 using namespace std;
@@ -154,12 +154,12 @@ public:
     string getLabel() const;
     string toString() const;
     static int numArgs(string opcode);
-    
+
 private:
     PyOpCode opcode;
     int operand;
     string label;
 };
 
-#endif	/* PYBYTECODE_H */
+#endif  /* PYBYTECODE_H */
 

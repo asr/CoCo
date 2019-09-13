@@ -3,17 +3,17 @@
  * Author: Kent D. Lee
  * (c) 2013
  * Created on: Feb 7, 2013
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * See the associated header file for a description of the purpose of this 
- * class. Implementation details are provided here. Read below for 
- * any specific details. 
- * 
+ * See the associated header file for a description of the purpose of this
+ * class. Implementation details are provided here. Read below for
+ * any specific details.
+ *
  */
 
 #include "PyScanner.h"
@@ -198,15 +198,15 @@ PyToken* PyScanner::getToken() {
                 foundOne = true;
                 type = PYRIGHTPARENTOKEN;
                 break;
-            case 11: 
-                if (isDigit(c)) 
+            case 11:
+                if (isDigit(c))
                     state = 2;
                 else {
                     type = PYBADTOKEN;
-                    foundOne = true;                    
+                    foundOne = true;
                 }
                 break;
-            case 12: 
+            case 12:
                 // Comments extend to end of line and
                 // begin with a semicolon.
                 if (c == '\n' || c == -1) {

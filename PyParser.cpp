@@ -1,34 +1,34 @@
-/* 
+/*
  * File:   PyParser.cpp
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 11, 2013, 10:38 PM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
  * The format of programs for the CoCo virtual machine is given by the following
  * grammar. This grammar is LL(1) and therefore can be implemented as a top
- * down parser. The methods of the PyParser class implement this top-down 
- * parser. Each non-terminal of the grammar below becomes a function in the 
- * top-down parser. Non-terminals that appear on the rhs (right-hand side) of a 
- * rule correspond to function calls. Tokens that appear on the rhs of a rule 
+ * down parser. The methods of the PyParser class implement this top-down
+ * parser. Each non-terminal of the grammar below becomes a function in the
+ * top-down parser. Non-terminals that appear on the rhs (right-hand side) of a
+ * rule correspond to function calls. Tokens that appear on the rhs of a rule
  * can be retrieved from the scanner by calling getToken on the scanner. Because
  * the grammar is LL(1), once in a while a token must be read to look ahead (needed
  * in deciding which rule to apply in some cases). In those cases, the token may
  * be put back using the putBackToken method. Only one token may be put back
  * on the scanner. Calling putBackToken multiple times will only put the last token
- * back once (until it is retrieved with getToken again). 
- * 
+ * back once (until it is retrieved with getToken again).
+ *
  * Here is the grammar.
  * ===========================================================================
  * PyAssemblyProg ::= FunctionListPart EOF
  * FunctionListPart ::= FunDef FunctionList
  * FunctionList ::= FunDef FunctionList | <null>
- * FunDef ::= Function colon Identifier slash Integer FunctionList ConstPart LocalsPart 
+ * FunDef ::= Function colon Identifier slash Integer FunctionList ConstPart LocalsPart
  *               FreeVarsPart CellVarsPart GlobalsPart BodyPart
  * ConstPart ::= <null> | Constants colon ValueList
  * ValueList ::= Value ValueRest
@@ -49,8 +49,8 @@
  * ============================================================================
  * The implementation below cheats a little bit and combines the LabeledInstruction,
  * UnaryInstruction, BinaryInstruction, and BinaryMneomic non-terminals into
- * one function (the LabeledInstruction function). 
- * 
+ * one function (the LabeledInstruction function).
+ *
  */
 
 #include "PyParser.h"
@@ -305,7 +305,7 @@ PyObject* PyParser::Value(vector<PyCode*>* nestedFunctions) {
             break;
     }
 
-    return NULL; // This won't happen, but C++ OS X compiler warns without. 
+    return NULL; // This won't happen, but C++ OS X compiler warns without.
 }
 
 vector<string>* PyParser::LocalsPart() {
@@ -506,6 +506,6 @@ PyByteCode* PyParser::LabeledInstruction() {
 
     badToken(tok1, "Instruction Syntax Error.");
 
-    return NULL; // This won't happen but C++ OS X compiler warns without. 
+    return NULL; // This won't happen but C++ OS X compiler warns without.
 }
 

@@ -1,19 +1,19 @@
-/* 
+/*
  * File:   PyFrame.cpp
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 15, 2013, 5:35 PM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * See the associated header file for a description of the purpose of this 
- * class. Implementation details are provided here. Read below for 
- * any specific details. 
- * 
+ * See the associated header file for a description of the purpose of this
+ * class. Implementation details are provided here. Read below for
+ * any specific details.
+ *
  */
 
 #include "PyFrame.h"
@@ -49,7 +49,7 @@ const char* cmp_op[12] = {
 PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
         unordered_map<string, PyObject*>& theGlobals, const vector<PyObject*>& theConstants,
         unordered_map<string, PyCell*>& theCellVars) :
-        code(theCode), globals(theGlobals), 
+        code(theCode), globals(theGlobals),
         consts(theConstants), cellvars(theCellVars) {
 
     vector<string>& varnames = code.getLocals();
@@ -60,7 +60,7 @@ PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
 
     // bind the parameter names to the arguments. Invert
     // the order because the arguments come into the function
-    // in reverse order. 
+    // in reverse order.
     int j = args->size()-1;
 
     for (int i = 0; i < args->size(); i++) {
@@ -72,9 +72,9 @@ PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
         string name = code.getCellVars()[i];
         cellvars[name] = new PyCell(NULL);
 
-        //Here we have a special case where the parameter 
+        //Here we have a special case where the parameter
         //is used in a nested function and so must be a cell
-        //instead of the normal local value. 
+        //instead of the normal local value.
         if (locals.find(name) != locals.end()) {
             cellvars[name]->set(locals[name]);
         }
@@ -83,10 +83,10 @@ PyFrame::PyFrame(const PyCode& theCode, vector<PyObject*>* args,
 
 PyFrame::~PyFrame() {
     try {
-        delete opStack;        
+        delete opStack;
     } catch (...) {}
     try {
-        delete blockStack;        
+        delete blockStack;
     } catch (...) {}
 }
 
@@ -190,8 +190,8 @@ PyObject* PyFrame::execute() {
                     u = safetyPop();
                     args = new vector<PyObject*>();
                     args->push_back(v);
-                    //Please note that the line below depends on the cmp_op 
-                    //array and it should be initialized to all comparison operators. This list will 
+                    //Please note that the line below depends on the cmp_op
+                    //array and it should be initialized to all comparison operators. This list will
                     //need to expand at some point. The cmp_op array is at the top of this module.
                     w = u->callMethod(cmp_op[operand], args);
                     try {
@@ -269,9 +269,9 @@ PyObject* PyFrame::execute() {
                     break;
 
                 case RETURN_VALUE:
-                    // At one point I had a check here that after popping the stack was empty. This 
-                    // turns out to be too restrictive since an exception may leave values on the 
-                    // stack when returning. 
+                    // At one point I had a check here that after popping the stack was empty. This
+                    // turns out to be too restrictive since an exception may leave values on the
+                    // stack when returning.
                     if (opStack->isEmpty()) {
                         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to pop empty operand stack in RETURN_VALUE.");
                     }
@@ -402,7 +402,7 @@ PyObject* PyFrame::execute() {
                     args = new vector<PyObject*>();
                     //NOTE: Arguments are added backwards because they are popped
                     //off the stack in reverse order. So the called function gets
-                    //the arguments backwards. 
+                    //the arguments backwards.
                     for (i = 0; i < operand; i++) {
                         u = safetyPop();
                         args->push_back(u);
@@ -434,7 +434,7 @@ PyObject* PyFrame::execute() {
                     opStack->push(w);
                     delete args;
                     break;
-                    
+
                 case STORE_SUBSCR:
                     u = safetyPop();
                     v = safetyPop();
@@ -442,19 +442,19 @@ PyObject* PyFrame::execute() {
                     args = new vector<PyObject*>();
                     args->push_back(u); // the index
                     args->push_back(w); // the item
-                    
+
                     w = v->callMethod("__setitem__", args); // None is returned
                     delete w;
                     delete args;
                     break;
 
                 case LOAD_CLOSURE:
-                    // The free or cell vars in the code object give us the name of the 
-                    // value. 
+                    // The free or cell vars in the code object give us the name of the
+                    // value.
                     name = getCellName(operand);
 
                     // Use the name to lookup the cell in the cellvar storage and push
-                    // it on the stack. 
+                    // it on the stack.
                     opStack->push(cellvars[name]);
                     break;
 
@@ -480,11 +480,11 @@ PyObject* PyFrame::execute() {
                     if (operand != tuple->size()) {
                         throw new PyException(PYILLEGALOPERATIONEXCEPTION, "Attempt to select elements of a tuple with incorrect size.");
                     }
-                    
+
                     for (i=tuple->size()-1;i>=0;i--) {
                         opStack->push(tuple->getVal(i));
                     }
-                    
+
                     break;
 
                 case BUILD_LIST:
@@ -555,20 +555,20 @@ PyObject* PyFrame::execute() {
 
                 case SETUP_EXCEPT:
                     // Multiplying by -1 is because any value less than 0
-                    // is for a try except. 
+                    // is for a try except.
                     blockStack->push(-1 * operand);
                     break;
 
                 case RAISE_VARARGS:
-                    // This is not currently implemented according to the 
+                    // This is not currently implemented according to the
                     // byte code documentation. The documentation says this:
                     // RAISE_VARARGS(argc)
-                    //    Raises an exception. argc indicates the number of 
-                    //    parameters to the raise statement, ranging from 0 to 3. 
-                    //    The handler will find the traceback as TOS2, the 
+                    //    Raises an exception. argc indicates the number of
+                    //    parameters to the raise statement, ranging from 0 to 3.
+                    //    The handler will find the traceback as TOS2, the
                     //    parameter as TOS1, and the exception as TOS.
                     // In this interpreter, currently exceptions contain the traceback
-                    // and there is always one argument to the RAISE_VARARGS 
+                    // and there is always one argument to the RAISE_VARARGS
                     // instruction, which is the value stored in the exception.
                     u = safetyPop();
                     throw ((PyException*) u);
@@ -611,7 +611,7 @@ PyObject* PyFrame::execute() {
 
                 case DELETE_FAST:
                     //The purpose of this instruction is not well understood.
-                    //According to the definition it deletes the local 
+                    //According to the definition it deletes the local
                     //variable found at index operand.
                     delete locals[code.getLocals()[operand]];
                     break;

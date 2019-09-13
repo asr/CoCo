@@ -3,33 +3,33 @@
  * Author: Kent D. Lee
  * (c) 2013
  * Created on: Feb 3, 2013
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
- * And here is where it all began. Now, while I haven't studied the 
- * the implementation of Python in C, it is pretty clear that PyObjects 
+ * And here is where it all began. Now, while I haven't studied the
+ * the implementation of Python in C, it is pretty clear that PyObjects
  * are a dictionary mapping magic method names to function pointers that
- * point to the C code of their respective implementations. 
- * 
+ * point to the C code of their respective implementations.
+ *
  * In CoCo I made the decision to use C++ as much as possible and to use
  * C++ inheritance to implement the magic methods. So, all magic methods
- * are declared as virtual functions. Either PyObject or subclasses of 
+ * are declared as virtual functions. Either PyObject or subclasses of
  * this class can implement these methods, either all or some, in whatever
- * way they see fit. I found the list of magic methods on the web at 
+ * way they see fit. I found the list of magic methods on the web at
  * http://www.rafekettler.com/magicmethods.html. As I developed CoCo and
  * added support for a few more datatypes, there were two more magic methods
  * that I found useful to implement. The "type" function calls the __type__
- * magic method. The __excmatch__ magic method is called when comparing 
- * an exception to a match in an exception handler. 
- * 
+ * magic method. The __excmatch__ magic method is called when comparing
+ * an exception to a match in an exception handler.
+ *
  * Finally, there are a few methods that are classified as methods on
- * objects in Python, like the split method on strings. These methods 
+ * objects in Python, like the split method on strings. These methods
  * are defined where appropriate.
- * 
+ *
  * The entire list of magic methods is included in this header file below, but
  * not all of them are implemented in this class or in subclasses. They are
  * provided here as a reference only to all the methods that could be defined.
@@ -44,33 +44,33 @@
 #include <iostream>
 using namespace std;
 
-class PyType; 
+class PyType;
 
 class PyObject {
 public:
-	PyObject();
-	virtual ~PyObject();
-	virtual PyType* getType();
+        PyObject();
+        virtual ~PyObject();
+        virtual PyType* getType();
    virtual string toString();
    void decRef();
    void incRef();
    int getRefCount() const;
-        
+
    PyObject* callMethod(string name, vector<PyObject*>* args);
-       
+
 protected:
-    unordered_map<string, PyObject* (PyObject::*)(vector<PyObject*>*)> dict;        
+    unordered_map<string, PyObject* (PyObject::*)(vector<PyObject*>*)> dict;
     int refCount;
-    
+
     virtual PyObject* __str__(vector<PyObject*>* args);
-    virtual PyObject* __type__(vector<PyObject*>* args);     
+    virtual PyObject* __type__(vector<PyObject*>* args);
 };
 
 ostream& operator << (ostream& os, PyObject& t);
 
 extern bool verbose;
 
-/* This list of methods came from 
+/* This list of methods came from
  *      http://www.rafekettler.com/magicmethods.html
 
    virtual PyObject* __cmp__(vector<PyObject*>* args);
@@ -133,7 +133,7 @@ extern bool verbose;
    virtual PyObject* __float__(vector<PyObject*>* args);
    virtual PyObject* __bool__(vector<PyObject*>* args);
    // editor didn't like __complex__, or was it C++?
-   virtual PyObject* __cmplex__(vector<PyObject*>* args); 
+   virtual PyObject* __cmplex__(vector<PyObject*>* args);
    virtual PyObject* __oct__(vector<PyObject*>* args);
    virtual PyObject* __hex__(vector<PyObject*>* args);
    virtual PyObject* __index__(vector<PyObject*>* args);
@@ -163,19 +163,19 @@ extern bool verbose;
    virtual PyObject* __subclasscheck__(vector<PyObject*>* args);
    virtual PyObject* __call__(vector<PyObject*>* args);
    virtual PyObject* __copy__(vector<PyObject*>* args);
-   virtual PyObject* __deepcopy__(vector<PyObject*>* args); 
+   virtual PyObject* __deepcopy__(vector<PyObject*>* args);
    virtual PyObject* __iter__(vector<PyObject*>* args);
    virtual PyObject* __next__(vector<PyObject*>* args);
 
 
    //These I added for my implementation.
-   virtual PyObject* __type__(vector<PyObject*>* args); 
+   virtual PyObject* __type__(vector<PyObject*>* args);
    virtual PyObject* __excmatch__(vector<PyObject*>* args);
 
 
-   //These are methods (attributes called Attr in Python) 
+   //These are methods (attributes called Attr in Python)
    //that might be defined on subclasses.
-   virtual PyObject* split(vector<PyObject*>* args); 
+   virtual PyObject* split(vector<PyObject*>* args);
    virtual PyObject* append(vector<PyObject*>* args);
    virtual PyObject* head(vector<PyObject*>* args);
    virtual PyObject* tail(vector<PyObject*>* args);

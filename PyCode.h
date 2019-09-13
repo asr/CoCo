@@ -1,35 +1,35 @@
-/* 
+/*
  * File:   PyCode.h
  * Author: Kent D. Lee
  * (c) 2013
  * Created on February 11, 2013, 10:53 AM
- * 
+ *
  * License:
  * Please read the LICENSE file in this distribution for details regarding
  * the licensing of this code. This code is freely available for educational
  * use. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
- * 
+ *
  * Description:
  * PyCode objects hold the various parts of an assembly language function. Each
- * function has a name, a number of arguments, byte code, and several lists 
- * which are outlined below. 
- * 
+ * function has a name, a number of arguments, byte code, and several lists
+ * which are outlined below.
+ *
  * Constants - Constant values that are used within the function.
- * 
- * Locals - The list of local variables used in the function. 
- * 
+ *
+ * Locals - The list of local variables used in the function.
+ *
  * FreeVars - The list of variables not initialized in this function. They are
- * referenced from an enclosing scope. 
- * 
+ * referenced from an enclosing scope.
+ *
  * CellVars - The list of cell variables for local variables that are referenced
  * outside of this function.
- * 
- * Globals - The list of globals like "str" and other functions that are 
+ *
+ * Globals - The list of globals like "str" and other functions that are
  * defined globally and used in this function.
  */
 
 #ifndef PYCODE_H
-#define	PYCODE_H
+#define PYCODE_H
 
 #include "PyByteCode.h"
 #include "PyObject.h"
@@ -53,14 +53,14 @@ public:
     vector<PyByteCode*>& getInstructions() const;
     vector<PyCode*>& getNestedFunctions() const;
     int getArgCount() const;
-    int numLocals() const; 
+    int numLocals() const;
     string toString();
     string prettyString(string indent,bool linenumbers) const;
     PyType* getType();
-    
+
     PyObject* __str__(vector<PyObject*>* args);
     PyObject* __type__(vector<PyObject*>* args);
-    
+
 private:
     string name;
     vector<PyCode*>* nestedFunctions;
@@ -73,5 +73,5 @@ private:
     int argcount;
 };
 
-#endif	/* PYCODE_H */
+#endif  /* PYCODE_H */
 
