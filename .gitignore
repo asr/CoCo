@@ -1,0 +1,5 @@
+*.o
+.deps/
+coco
+Makefile
+
