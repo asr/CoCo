@@ -48,15 +48,15 @@ class PyType;
 
 class PyObject {
 public:
-        PyObject();
-        virtual ~PyObject();
-        virtual PyType* getType();
-   virtual string toString();
-   void decRef();
-   void incRef();
-   int getRefCount() const;
+    PyObject();
+    virtual ~PyObject();
+    virtual PyType* getType();
+    virtual string toString();
+    void decRef();
+    void incRef();
+    int getRefCount() const;
 
-   PyObject* callMethod(string name, vector<PyObject*>* args);
+    PyObject* callMethod(string name, vector<PyObject*>* args);
 
 protected:
     unordered_map<string, PyObject* (PyObject::*)(vector<PyObject*>*)> dict;
